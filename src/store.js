@@ -2,20 +2,20 @@ import { create, save, getStore } from './helpers';
 import Record from './record';
 
 class Store {
-    constructor (namespace) {
-        if (typeof namespace !== 'string' ) {
-            console.error('VarietyStore namespace must be a string.');
-            return;
-        }
+	constructor (namespace) {
+		if (typeof namespace !== 'string' ) {
+			console.error('VarietyStore namespace must be a string.');
+		return;
+	}
 
-        if (namespace.length <= 0) {
-            console.error('Empty string given as VarietyStore namespace.');
-        }
+		if (namespace.length <= 0) {
+			console.error('Empty string given as VarietyStore namespace.');
+		}
 
-        this.namespace = namespace;
-    }
+		this.namespace = namespace;
+	}
 
-    save (key, data, expires) {
+	save (key, data, expires) {
 		const storeData = create(data, expires);
 		save(this.namespace, key, storeData);
 
