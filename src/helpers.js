@@ -1,4 +1,4 @@
-const getStore = (namespace) => {
+export const getStore = (namespace) => {
 	const store = localStorage.getItem(namespace);
 	let parsedStore = {};
 
@@ -9,7 +9,7 @@ const getStore = (namespace) => {
 	return parsedStore;
 };
 
-const save = (namespace, key, data) => {
+export const save = (namespace, key, data) => {
 	const store = getStore(namespace);
 	const col = store[key];
 
@@ -28,7 +28,7 @@ const save = (namespace, key, data) => {
 	localStorage.setItem(namespace, JSON.stringify(store));
 };
 
-const update = (namespace, key, record, data) => {
+export const update = (namespace, key, record, data) => {
 	const store = getStore(namespace);
 	const col = store[key];
 	const index = col.items.indexOf(col.items.filter(rec => rec.cid === record.cid));
@@ -40,11 +40,11 @@ const update = (namespace, key, record, data) => {
 	localStorage.setItem(namespace, JSON.stringify(store));
 };
 
-const isObject = (data) => {
+export const isObject = (data) => {
 	return typeof data === 'object' && data instanceof Array === false;
 };
 
-const create = (data = {}, expires = 0) => {
+export const create = (data = {}, expires = 0) => {
 	const storeData = { data };
 
 	storeData.expires = expires;
@@ -53,7 +53,7 @@ const create = (data = {}, expires = 0) => {
 	return storeData;
 };
 
-const hasExpired = (data) => {
+export const hasExpired = (data) => {
 	if (isObject(data)) {
 		return false;
 	}
