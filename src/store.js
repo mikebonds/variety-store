@@ -27,15 +27,20 @@ class Store {
 		delete store[key];
 	}
 
-	find (key, matcher) {
+	find (key, queryFunc) {
+		if (typeof queryFunc !== 'function') {
+			console.error('find(key, queryFunc): queryFunc is required.');
+			return;
+		}
+
 		const store = getStore(this.namespace);
 		const col = store[key];
-		const proxyMatcher = (rec) => {
-			return matcher(rec.data);
+		const proxy = (rec) => {
+			return queryFunc(rec.data);
 		};
 
 		if (col) {
-			const data = col.items.find(proxyMatcher);
+			const data = col.items.find(proxy);
 
 			if (data) {
 				return new Record(this, key, data, false);
